@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <h1>TIC-TAC-TOE</h1>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <input type="text" id="1" style="width:17px" disabled="true"/>
+            </td>
+            <td>
+                <input type="text" id="2" style="width:17px" disabled="true"/>
+            </td>
+            <td>
+                <input type="text" id="3" style="width:17px" disabled="true"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" id="4" style="width:17px" disabled="true"/>
+            </td>
+            <td>
+                <input type="text" id="5" style="width:17px" disabled="true"/>
+            </td>
+            <td>
+                <input type="text" id="6" style="width:17px" disabled="true"/>
+                </td>
+        </tr>
+        <tr>
+        <td>
+            <input type="text" id="7" style="width:17px" disabled="true"/>
+        </td>
+        <td>
+            <input type="text" id="8" style="width:17px" disabled="true"/>
+        </td>
+        <td>
+            <input type="text" id="9" style="width:17px" disabled="true"/>
+            </td>
+            </tr>
+            </table>
+            <table>
+            <tr>   
+                <td>            
+                    <input type="text" id="inputchoice"/>
+                </td>
+            <td align="center">
+                <button type="button" onclick="inputval('X');clearOnClick()"> X </button>
+            </td>
+            <td align="center">
+                <button type="button" onclick="inputval2('O');clearOnClick()"> O </button>
+            </td>
+            </tr>
+            <tr>
+            <td align="center">
+                <button type="button" onclick="gameresult()"> Who won? </button>
+            </td>
+                <td colspan="9" align="center">
+                    <button type="button" onclick="reset()"> Reset </button>
+                </td>
+            </tr>
+            
+            
+        </tr>
+            </tr>
+    </table>
+    <br>
+    <div id="display" disabled="false"/>
+        
+    </div>
+<script>
+console.log("begin");
+let funccall=0;
+
+function inputval(X){
+if(funccall<=4){
+
+
+    var gridno=document.getElementById('inputchoice').value;
+    var isempty=document.getElementById(gridno).value;
+    if(isempty===''){
+        document.getElementById(gridno).value=X;
+        funccall++;
+    }
+        else{
+        console.log("grid already occupied");
+        }
+    
+
+}
+else{
+    console.log("max limit has been reached for input of X");
+
+}
+
+
+}
+let funccall2=0;
+function inputval2(O){
+if(funccall2<=4){
+
+//const randno=Math.floor(Math.random()*9)+1;
+
+    var gridno=document.getElementById('inputchoice').value;
+    var isempty=document.getElementById(gridno).value;
+    if(isempty===''){
+        document.getElementById(gridno).value='O';
+        funccall2++;
+    }
+        else{
+        console.log("grid already occupied");
+        }
+    
+
+}
+else{
+    console.log("max limit has been reached for input of O");
+
+}
+
+
+}
+
+function colorcell(x,y,z){
+    document.getElementById(x).style.backgroundColor='cyan';
+    document.getElementById(y).style.backgroundColor='cyan';
+    document.getElementById(z).style.backgroundColor='cyan' ;
+    console.log('color');
+}
+function gameresult(){
+    var gameMetrics=[];
+    var i;
+    for(i=0;i<9;i++){
+        var cellval=document.getElementById(i+1);
+        gameMetrics.push(cellval.value);
+       
+    }
+    console.log(gameMetrics); 
+    let winningCombForX=['X','X','X'];
+    let winningCombForO=['O','O','O'];
+    var j=0;
+    while(j<gameMetrics.length){
+        let checkForHorizontal=[gameMetrics[j],gameMetrics[j+1],gameMetrics[j+2]];
+        console.log(checkForHorizontal);
+        //console.log(winningCombForX[0]);
+        if(checkForHorizontal[0]===winningCombForX[0] && checkForHorizontal[1]===winningCombForX[1] && checkForHorizontal[2]===winningCombForX[2]){
+            document.getElementById('display').innerText="X has won the game through horizontal triplet";
+            //console.log("");
+            colorcell(j+1,j+2,j+3);
+            return checkForHorizontal;
+           
+            
+             
+    }
+    else if(checkForHorizontal[0]===winningCombForO[0] && checkForHorizontal[1]===winningCombForO[1]&& checkForHorizontal[2]===winningCombForO[2]){
+        //console.log("O has won the game through horizontal triplet");
+        document.getElementById('display').innerText="O has won the game through horizontal triplet";
+        colorcell(j+1,j+2,j+3);
+        return checkForHorizontal;    
+        break;
+           
+    }
+
+    else if(j==6){
+        console.log("No winning combination found for horizontal alignment, now checking for vertical");
+        break;
+    }
+        
+        j=j+3;
+}
+        var m=0;
+        while(m<gameMetrics.length){
+            
+        let checkForVertical=[gameMetrics[m],gameMetrics[m+3],gameMetrics[m+6]];
+        console.log(checkForVertical);
+        if(checkForVertical[0]===winningCombForX[0] && checkForVertical[1]===winningCombForX[1] && checkForVertical[2]===winningCombForX[2]){
+            //console.log("X has won the game through vertical triplet");
+            document.getElementById('display').innerText="X has won the game through vertical triplet";
+            colorcell(m+1,m+4,m+7);
+            return checkForVertical;
+        
+             
+    }
+    else if(checkForVertical[0]===winningCombForO[0] && checkForVertical[1]===winningCombForO[1]&& checkForVertical[2]===winningCombForO[2]){
+        //console.log("O has won the game through vertical triplet");
+        document.getElementById('display').innerText="O has won the game through horizontal triplet";
+        colorcell(m+1,m+4,m+7);
+        return checkForVertical;  
+    
+    }
+    m+=1;
+    if(m>2){
+        console.log("No winning combination has been found for vertical alignment, checking for diagonal");
+        break;
+    }
+        }
+        var n=0;
+        let checkForDiagonal1=[gameMetrics[n],gameMetrics[n+4],gameMetrics[n+8]];
+        let checkForDiagonal2=[gameMetrics[n+2],gameMetrics[n+4],gameMetrics[n+6]];
+       // console.log(checkForDiagonal1);
+        //console.log(checkForDiagonal2);
+        if(checkForDiagonal1[0]===winningCombForX[0] && checkForDiagonal1[1]===winningCombForX[1] && checkForDiagonal1[2]===winningCombForX[2]){
+            //console.log("X has won the game through diagonal triplet left to right"); 
+            document.getElementById('display').innerText="X has won the game through diagonal triplet left to right";
+            colorcell(n+1,n+5,n+9);
+            return checkForDiagonal1;
+    }
+    else if(checkForDiagonal2[0]===winningCombForX[0] && checkForDiagonal2[1]===winningCombForX[1] && checkForDiagonal2[2]===winningCombForX[2]){
+        //console.log('X has won the game through diagonal triplet through right to left');
+        document.getElementById('display').innerText="X has won the game through diagonal triplet right to left";
+        colorcell(n+3,n+5,n+7);
+        return checkForDiagonal2;
+    }
+    else if(checkForDiagonal1[0]===winningCombForO[0] && checkForDiagonal1[1]===winningCombForO[1] && checkForDiagonal1[2]===winningCombForO[2]){
+        //console.log("O has won the game through diagonal triplet through left to right");
+        document.getElementById('display').innerText="O has won the game through diagonal triplet left to right";
+        colorcell(n+1,n+5,n+9);
+        return checkForDiagonal1;
+    }
+    else if(checkForDiagonal2[0]===winningCombForO[0] && checkForDiagonal2[1]===winningCombForO[1] && checkForDiagonal2[2]===winningCombForO[2]){
+       // console.log("O has won the game through diagonal triplet through right to left");
+        document.getElementById('display').innerText="O has won the game through diagonal triplet right to left";
+        colorcell(n+3,n+5,n+7);
+        return checkForDiagonal2;
+    }
+    else{
+        console.log("Game is a draw as things stand");
+        document.getElementById('display').innerText="Game is a draw as things stand";
+    }
+    }
+    function reset(){
+        for(var i=1;i<=9;i++){
+        document.getElementById(i).value='';
+        document.getElementById(i).style.backgroundColor='white';
+        }
+        document.getElementById('display').innerText='';
+        
+    } 
+    function clearOnClick(){
+        document.getElementById('inputchoice').value='';
+    }  
+</script>
+       
+</body>
+</html>
+
+
+
